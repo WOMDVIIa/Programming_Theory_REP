@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class Woodcutter : Building
 {
     // Start is called before the first frame update
     void Start()
@@ -17,8 +16,8 @@ public class MenuManager : MonoBehaviour
         
     }
 
-    public void StartGame()
+    public override void GenerateResources()
     {
-        SceneManager.LoadScene(1);
+        
     }
 }
