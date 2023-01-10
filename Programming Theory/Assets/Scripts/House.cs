@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Woodcutter : Building
+public class House : Building
 {
     // Start is called before the first frame update
     void Start()
     {
-        resourceOutput = 2;
+        resourceOutput = 1;
     }
 
     public override void GenerateResources(int[] gatheredResources)
     {
-        gatheredResources[(int)MainManager.resources.wood] = resourceOutput;
+        gatheredResources[(int)MainManager.resources.population] = resourceOutput;
     }
 }

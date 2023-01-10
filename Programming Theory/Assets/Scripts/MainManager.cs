@@ -22,35 +22,49 @@ public class MainManager : MonoBehaviour
     };
 
     public int numberOfResources { get; private set; }
+    public int numberOfConstructableBuildings { get; private set; }
 
     int[] resourcesBank;
+    string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
     [SerializeField] GameObject[] buildingsPrefabs;
     [SerializeField] List<Building> listOfBuildings;
-    string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
-
+    [SerializeField] Button[] buildButtons;
     [SerializeField] TextMeshProUGUI[] resourceInterfaceText;
+
     float updateResourcesStartTime = 0;
     float updateResourcesRepeatRate = 1;
-    int maxNumberOfBuildings = 5 * 4;
+    int constructionSitesInX = 5;
+    int constructionSitesInY = 4;
+    int maxNumberOfBuildings;
 
     // Start is called before the first frame update
     void Start()
     {
-        //if (instance == null)
-        //{
-        //    instance = this;
-        //    DontDestroyOnLoad(gameObject);
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
-
         instance = this;
-
-        numberOfResources = Enum.GetValues(typeof(resources)).Cast<int>().Max() + 1;
-        resourcesBank = new int[numberOfResources];
+        GetEnumsSize();
+        AddConstructButtonsListeners();
+        NewArrays_CalculatableVariables();
         InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
+    }
+
+    void GetEnumsSize()
+    {
+        numberOfResources = Enum.GetValues(typeof(resources)).Cast<int>().Max() + 1;
+        numberOfConstructableBuildings = Enum.GetValues(typeof(buildings)).Cast<int>().Max() + 1;
+    }
+    void NewArrays_CalculatableVariables()
+    {
+        resourcesBank = new int[numberOfResources];
+        maxNumberOfBuildings = constructionSitesInX * constructionSitesInY;
+    }
+
+    void AddConstructButtonsListeners()
+    {
+        for (int i = 0; i < numberOfConstructableBuildings; i++)
+        {
+            int j = i;
+            buildButtons[j].onClick.AddListener(delegate { ConstructBuilding(j); });
+        }
     }
 
     void UpdateResources()
@@ -74,22 +88,20 @@ public class MainManager : MonoBehaviour
         for (int i = 0; i < numberOfResources; i++)
         {
             resourceInterfaceText[i].text = resourceInterfaceBulkText[i] + resourcesBank[i];
-                //resourceInterfaceBulkText[i] + resourcesBank[i];            
         }
     }
 
-    public void BuildHouse()
+    void GetNewConstructionPosition()
     {
 
+        
     }
 
-    public void BuildWoodcutter()
+    public void ConstructBuilding(int buildingIndex)
     {
         if (listOfBuildings.Count < maxNumberOfBuildings)
         {
-            /*Building newBuiulding = */listOfBuildings.Add(Instantiate(buildingsPrefabs[(int)buildings.woodcutter].gameObject, transform).GetComponent<Building>());
-            //listOfBuildings.Add(newBuiulding);
-            //Instantiate(buildingsPrefabs[(int)buildings.woodcutter].gameObject, transform);
+            listOfBuildings.Add(Instantiate(buildingsPrefabs[buildingIndex].gameObject, transform).GetComponent<Building>());
         }
     }
 }
