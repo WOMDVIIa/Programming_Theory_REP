@@ -21,9 +21,9 @@ public class MainManager : MonoBehaviour
         woodcutter
     };
 
-    public int numberOfResources { get; private set; }
-    public int numberOfConstructableBuildings { get; private set; }
-    public int[] resourcesBank { get; private set; }
+    public int numberOfResources { get; private set; }  // ENCAPSULATION
+    public int numberOfConstructableBuildings { get; private set; } // ENCAPSULATION
+    public int[] resourcesBank { get; private set; }    // ENCAPSULATION
 
     string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
     [SerializeField] TextMeshProUGUI timerText;
@@ -48,10 +48,10 @@ public class MainManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        GetEnumsSize();
-        AddConstructButtonsListeners();
-        NewArrays_CalculatableVariables();
-        FillResourceCosts();
+        GetEnumsSize(); // ABSTRACTION
+        AddConstructButtonsListeners(); // ABSTRACTION
+        NewArrays_CalculatableVariables();  // ABSTRACTION
+        FillResourceCosts();    // ABSTRACTION
         isOver = false;
         Invoke("UpdateResources", updateResourcesStartTime);
         //InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
@@ -95,7 +95,7 @@ public class MainManager : MonoBehaviour
         resourceCosts[3].text = "W: "   + Woodcutter.woodCost;
     }
 
-    void UpdateResources()
+    void UpdateResources()  // ABSTRACTION
     {
         for (int i = 0; i < listOfBuildings.Count; i++)
         {
@@ -107,7 +107,7 @@ public class MainManager : MonoBehaviour
                 resourcesBank[j] += gatheredResources[j];
             }
         }
-        UpdateResourcesText();
+        UpdateResourcesText();  // ABSTRACTION
         if (!isOver)
         {
             StartCoroutine(NextResourceGathering());

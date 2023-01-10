@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    protected int resourceOutput;
+    protected int resourceOutput;   // ENCAPSULATION
 
     virtual public void GenerateResources(int[] gatheredResources){}
 

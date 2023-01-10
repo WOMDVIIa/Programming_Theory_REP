@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Woodcutter : Building
+public class Woodcutter : Building  // INHERITANCE
 {
     static public int populationCost = 15;
     static public int woodCost = 5;
@@ -13,12 +13,12 @@ public class Woodcutter : Building
         resourceOutput = 2;
     }
 
-    public override void GenerateResources(int[] gatheredResources)
+    public override void GenerateResources(int[] gatheredResources) // POLYMORPHISM
     {
         gatheredResources[(int)MainManager.resources.wood] = resourceOutput;
     }
 
-    public override bool HaveEnoughResources(int[] availableResources)
+    public override bool HaveEnoughResources(int[] availableResources)  // POLYMORPHISM
     {
         if (populationCost <= availableResources[(int)MainManager.resources.population])
         {
@@ -30,7 +30,7 @@ public class Woodcutter : Building
         return false;
     }
 
-    public override void ConstructBuilding(int[] buildingCost)
+    public override void ConstructBuilding(int[] buildingCost)  // POLYMORPHISM
     {
         buildingCost[(int)MainManager.resources.population] = populationCost;
         buildingCost[(int)MainManager.resources.wood] = woodCost;
