@@ -36,6 +36,8 @@ public class MainManager : MonoBehaviour
     int constructionSitesInX = 5;
     int constructionSitesInY = 4;
     int maxNumberOfBuildings;
+    float groundXSize = 100;
+    float groundYSize = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,7 @@ public class MainManager : MonoBehaviour
         numberOfResources = Enum.GetValues(typeof(resources)).Cast<int>().Max() + 1;
         numberOfConstructableBuildings = Enum.GetValues(typeof(buildings)).Cast<int>().Max() + 1;
     }
+
     void NewArrays_CalculatableVariables()
     {
         resourcesBank = new int[numberOfResources];
@@ -91,17 +94,19 @@ public class MainManager : MonoBehaviour
         }
     }
 
-    void GetNewConstructionPosition()
+    Vector3 GetNewConstructionPosition()
     {
+        int xPos = (listOfBuildings.Count % constructionSitesInX);
+        int yPos = listOfBuildings.Count / constructionSitesInX;
 
-        
+        return new Vector3(xPos * groundXSize / constructionSitesInX, 0.1f, yPos * groundYSize / constructionSitesInY);
     }
 
     public void ConstructBuilding(int buildingIndex)
     {
         if (listOfBuildings.Count < maxNumberOfBuildings)
         {
-            listOfBuildings.Add(Instantiate(buildingsPrefabs[buildingIndex].gameObject, transform).GetComponent<Building>());
+            listOfBuildings.Add(Instantiate(buildingsPrefabs[buildingIndex].gameObject, GetNewConstructionPosition(), transform.rotation).GetComponent<Building>());
         }
     }
 }
