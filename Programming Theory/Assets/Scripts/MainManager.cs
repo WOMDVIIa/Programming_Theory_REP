@@ -23,8 +23,8 @@ public class MainManager : MonoBehaviour
 
     public int numberOfResources { get; private set; }
     public int numberOfConstructableBuildings { get; private set; }
+    public int[] resourcesBank { get; private set; }
 
-    int[] resourcesBank;
     string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
     [SerializeField] GameObject[] buildingsPrefabs;
     [SerializeField] List<Building> listOfBuildings;
@@ -106,7 +106,13 @@ public class MainManager : MonoBehaviour
     {
         if (listOfBuildings.Count < maxNumberOfBuildings)
         {
-            listOfBuildings.Add(Instantiate(buildingsPrefabs[buildingIndex].gameObject, GetNewConstructionPosition(), transform.rotation).GetComponent<Building>());
+            Building newConstruction = buildingsPrefabs[buildingIndex].GetComponent<Building>();
+            if (newConstruction.HaveEnoughResources(resourcesBank))
+            {
+                listOfBuildings.Add(Instantiate(newConstruction, GetNewConstructionPosition(), transform.rotation));
+
+                //listOfBuildings.Add(Instantiate(buildingsPrefabs[buildingIndex].gameObject, GetNewConstructionPosition(), transform.rotation).GetComponent<Building>());
+            }
         }
     }
 }

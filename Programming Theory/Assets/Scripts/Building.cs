@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    protected int[] cost;
     protected int resourceOutput;
 
-    virtual public void GenerateResources(int[] gatheredResources ){}
+    virtual public void GenerateResources(int[] gatheredResources){}
+
+    virtual public bool HaveEnoughResources(int[] availableResources)
+    {
+        return false;
+    }
 }

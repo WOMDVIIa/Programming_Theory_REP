@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class House : Building
 {
+    static int populationCost = 3;
+    static int woodCost = 15;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,5 +16,17 @@ public class House : Building
     public override void GenerateResources(int[] gatheredResources)
     {
         gatheredResources[(int)MainManager.resources.population] = resourceOutput;
+    }
+
+    public override bool HaveEnoughResources(int[] availableResources)
+    {
+        if (populationCost <= availableResources[(int)MainManager.resources.population])
+        {
+            if (woodCost <= availableResources[(int)MainManager.resources.wood])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
