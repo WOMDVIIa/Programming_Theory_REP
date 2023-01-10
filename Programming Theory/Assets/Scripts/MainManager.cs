@@ -9,22 +9,29 @@ using TMPro;
 public class MainManager : MonoBehaviour
 {
     public static MainManager instance;
+
     public enum resources
     {
         population,
         wood
     };
+    public enum buildings
+    {
+        house,
+        woodcutter
+    };
 
-    public int[] resourcesBank;
+    public int numberOfResources { get; private set; }
 
-    public List<Building> listOfBuildings;
-
+    int[] resourcesBank;
+    [SerializeField] GameObject[] buildingsPrefabs;
+    [SerializeField] List<Building> listOfBuildings;
     string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
 
     [SerializeField] TextMeshProUGUI[] resourceInterfaceText;
-    [SerializeField] int numberOfResources;
     float updateResourcesStartTime = 0;
     float updateResourcesRepeatRate = 1;
+    int maxNumberOfBuildings = 5 * 4;
 
     // Start is called before the first frame update
     void Start()
@@ -42,13 +49,8 @@ public class MainManager : MonoBehaviour
         instance = this;
 
         numberOfResources = Enum.GetValues(typeof(resources)).Cast<int>().Max() + 1;
+        resourcesBank = new int[numberOfResources];
         InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void UpdateResources()
@@ -71,7 +73,23 @@ public class MainManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfResources; i++)
         {
-            resourceInterfaceText[i].text = resourceInterfaceBulkText[i] + resourcesBank[i];            
+            resourceInterfaceText[i].text = resourceInterfaceBulkText[i] + resourcesBank[i];
+                //resourceInterfaceBulkText[i] + resourcesBank[i];            
+        }
+    }
+
+    public void BuildHouse()
+    {
+
+    }
+
+    public void BuildWoodcutter()
+    {
+        if (listOfBuildings.Count < maxNumberOfBuildings)
+        {
+            /*Building newBuiulding = */listOfBuildings.Add(Instantiate(buildingsPrefabs[(int)buildings.woodcutter].gameObject, transform).GetComponent<Building>());
+            //listOfBuildings.Add(newBuiulding);
+            //Instantiate(buildingsPrefabs[(int)buildings.woodcutter].gameObject, transform);
         }
     }
 }

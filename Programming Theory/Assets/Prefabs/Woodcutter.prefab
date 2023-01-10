@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6081565349702455458}
   - component: {fileID: 2221205576624222824}
   - component: {fileID: 5084444608077367699}
+  - component: {fileID: 2802374414458707325}
   m_Layer: 0
   m_Name: Woodcutter
   m_TagString: Untagged
@@ -97,3 +98,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2802374414458707325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2508122817527905093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133e32d9401a0504891123f29e4d4b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefab: {fileID: 2508122817527905093}

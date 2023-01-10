@@ -20,4 +20,5 @@ public class Building : MonoBehaviour
     }
 
     virtual public void GenerateResources(int[] gatheredResources ){}
+    //virtual public void Build(int[] gatheredResources) { }
 }
