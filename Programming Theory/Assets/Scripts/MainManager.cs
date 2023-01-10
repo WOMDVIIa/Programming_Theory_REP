@@ -110,9 +110,19 @@ public class MainManager : MonoBehaviour
             if (newConstruction.HaveEnoughResources(resourcesBank))
             {
                 listOfBuildings.Add(Instantiate(newConstruction, GetNewConstructionPosition(), transform.rotation));
-
-                //listOfBuildings.Add(Instantiate(buildingsPrefabs[buildingIndex].gameObject, GetNewConstructionPosition(), transform.rotation).GetComponent<Building>());
+                PayForNewBuilding();
             }
         }
+    }
+
+    void PayForNewBuilding()
+    {
+        int[] newBuildingCost = new int[numberOfResources];
+        listOfBuildings.Last().ConstructBuilding(newBuildingCost);
+        for (int i = 0; i < numberOfResources; i++)
+        {
+            resourcesBank[i] -= newBuildingCost[i];
+        }
+        UpdateResourcesText();
     }
 }

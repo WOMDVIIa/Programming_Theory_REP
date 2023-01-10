@@ -29,4 +29,10 @@ public class House : Building
         }
         return false;
     }
+
+    public override void ConstructBuilding(int[] buildingCost)
+    {
+        buildingCost[(int)MainManager.resources.population] = populationCost;
+        buildingCost[(int)MainManager.resources.wood] = woodCost;
+    }
 }

@@ -12,4 +12,6 @@ public class Building : MonoBehaviour
     {
         return false;
     }
+
+    virtual public void ConstructBuilding(int[] buildingCost){}
 }
