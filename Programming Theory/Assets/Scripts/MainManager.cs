@@ -8,6 +8,7 @@ using TMPro;
 
 public class MainManager : MonoBehaviour
 {
+    public static MainManager instance;
     public enum resources
     {
         population,
@@ -28,6 +29,18 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //if (instance == null)
+        //{
+        //    instance = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
+
+        instance = this;
+
         numberOfResources = Enum.GetValues(typeof(resources)).Cast<int>().Max() + 1;
         InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
     }
@@ -42,7 +55,13 @@ public class MainManager : MonoBehaviour
     {
         for (int i = 0; i < listOfBuildings.Count; i++)
         {
-            listOfBuildings[i].GenerateResources();
+            int[] gatheredResources = new int[numberOfResources] ;
+            listOfBuildings[i].GenerateResources(gatheredResources);
+
+            for (int j = 0; j < numberOfResources; j++)
+            {
+                resourcesBank[j] += gatheredResources[j];
+            }
         }
 
         UpdateResourcesText();

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    protected int[] costs;
+    protected int[] cost;
+    protected int resourceOutput;
 
     // Start is called before the first frame update
     void Start()
@@ -18,5 +19,5 @@ public class Building : MonoBehaviour
         
     }
 
-    virtual public void GenerateResources(){}
+    virtual public void GenerateResources(int[] gatheredResources ){}
 }
