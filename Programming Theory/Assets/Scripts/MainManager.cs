@@ -27,12 +27,14 @@ public class MainManager : MonoBehaviour
 
     string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
     [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI gameOverText;
     [SerializeField] GameObject[] buildingsPrefabs;
     [SerializeField] List<Building> listOfBuildings;
     [SerializeField] Button[] buildButtons;
     [SerializeField] TextMeshProUGUI[] resourceInterfaceText;
     [SerializeField] TextMeshProUGUI[] resourceCosts;
 
+    bool isOver;
     float timeElapsed;
     float updateResourcesStartTime = 0;
     float updateResourcesRepeatRate = 1;
@@ -50,13 +52,18 @@ public class MainManager : MonoBehaviour
         AddConstructButtonsListeners();
         NewArrays_CalculatableVariables();
         FillResourceCosts();
-        InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
+        isOver = false;
+        Invoke("UpdateResources", updateResourcesStartTime);
+        //InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
     }
 
     private void Update()
     {
-        timeElapsed += Time.deltaTime;
-        timerText.text = "Time Elapsed: " + timeElapsed.ToString("0.0"); /*Math.Round(timeElapsed, 1);*/
+        if (!isOver)
+        {
+            timeElapsed += Time.deltaTime;
+            timerText.text = "Time Elapsed: " + timeElapsed.ToString("0.0"); /*Math.Round(timeElapsed, 1);*/
+        }
     }
 
     void GetEnumsSize()
@@ -100,8 +107,17 @@ public class MainManager : MonoBehaviour
                 resourcesBank[j] += gatheredResources[j];
             }
         }
-
         UpdateResourcesText();
+        if (!isOver)
+        {
+            StartCoroutine(NextResourceGathering());
+        }
+    }
+
+    IEnumerator NextResourceGathering()
+    {
+        yield return new WaitForSeconds(updateResourcesRepeatRate);
+        UpdateResources();
     }
 
     void UpdateResourcesText()
@@ -129,6 +145,11 @@ public class MainManager : MonoBehaviour
             {
                 listOfBuildings.Add(Instantiate(newConstruction, GetNewConstructionPosition(), transform.rotation));
                 PayForNewBuilding();
+                if (listOfBuildings.Count == maxNumberOfBuildings)
+                {
+                    isOver = true;
+                    gameOverText.gameObject.SetActive(true);
+                }
             }
         }
     }
