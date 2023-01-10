@@ -26,11 +26,14 @@ public class MainManager : MonoBehaviour
     public int[] resourcesBank { get; private set; }
 
     string[] resourceInterfaceBulkText = { "(Pop)ulation: ", "(W)ood: "};
+    [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] GameObject[] buildingsPrefabs;
     [SerializeField] List<Building> listOfBuildings;
     [SerializeField] Button[] buildButtons;
     [SerializeField] TextMeshProUGUI[] resourceInterfaceText;
+    [SerializeField] TextMeshProUGUI[] resourceCosts;
 
+    float timeElapsed;
     float updateResourcesStartTime = 0;
     float updateResourcesRepeatRate = 1;
     int constructionSitesInX = 5;
@@ -46,7 +49,14 @@ public class MainManager : MonoBehaviour
         GetEnumsSize();
         AddConstructButtonsListeners();
         NewArrays_CalculatableVariables();
+        FillResourceCosts();
         InvokeRepeating("UpdateResources", updateResourcesStartTime, updateResourcesRepeatRate);
+    }
+
+    private void Update()
+    {
+        timeElapsed += Time.deltaTime;
+        timerText.text = "Time Elapsed: " + timeElapsed.ToString("0.0"); /*Math.Round(timeElapsed, 1);*/
     }
 
     void GetEnumsSize()
@@ -68,6 +78,14 @@ public class MainManager : MonoBehaviour
             int j = i;
             buildButtons[j].onClick.AddListener(delegate { ConstructBuilding(j); });
         }
+    }
+
+    void FillResourceCosts()
+    {
+        resourceCosts[0].text = "Pop: " + House.populationCost;
+        resourceCosts[1].text = "W: "   + House.woodCost;
+        resourceCosts[2].text = "Pop: " + Woodcutter.populationCost;
+        resourceCosts[3].text = "W: "   + Woodcutter.woodCost;
     }
 
     void UpdateResources()

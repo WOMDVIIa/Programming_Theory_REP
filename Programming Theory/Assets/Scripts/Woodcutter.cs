@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Woodcutter : Building
 {
-    static int populationCost = 15;
-    static int woodCost = 5;
+    static public int populationCost = 15;
+    static public int woodCost = 5;
 
     // Start is called before the first frame update
     void Start()
